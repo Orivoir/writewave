@@ -1,0 +1,16 @@
+{
+  "Login": {
+    "Title": "Sign in to Writewave",
+    "GoogleOauthButton": "Continue with Google",
+    "FacebookOauthButton": "Continue with Facebook",
+    "MagicLinkAuthButton": "Send email link",
+    "MagicLinkTitle": "Or use a magic link",
+    "Feedback": {
+      "MagicLinkError": "Error cant send email, try other methods.",
+      "MagicLinkSuccess": "Check you mailbox !"
+    }
+  },
+  "Plan": {
+    "SubscriptionButton": "Free trial"
+  }
+}
