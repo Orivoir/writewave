@@ -6,7 +6,7 @@ export async function GET(
   _: NextRequest,
   { params }: { params: { customerId: string } }
 ) {
-  const customerId = await params.customerId;
+  const {customerId} = await params;
 
   if (!customerId) {
     return NextResponse.json({ error: "Missing customer ID" }, { status: 400 });
