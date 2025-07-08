@@ -1,11 +1,15 @@
 import { Button } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { useState } from "react";
 
 export default function SubscriptionButton() {
 
   const t = useTranslations("Plan")
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const onSubscription = async () => {
+    setIsLoading(true)
     const res = await fetch(
       "/api/stripe/checkout",
       {
@@ -20,7 +24,12 @@ export default function SubscriptionButton() {
   }
 
   return (
-    <Button variant="contained" onClick={onSubscription}>
+    <Button
+      variant="contained"
+      onClick={onSubscription}
+      loading={isLoading}
+      loadingPosition="end"
+    >
       {t("SubscriptionButton")}
     </Button>
   )

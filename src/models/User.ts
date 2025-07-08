@@ -1,16 +1,8 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export type UserRole = 'admin' | 'free' | 'premium';
+export type UserRole = 'admin' | 'customer';
 
-export type SubscriptionStatus = 
-  | 'active'               // Abonnement actif, paiements à jour
-  | 'canceled'             // Abonnement annulé (arrêté, plus renouvelé)
-  | 'past_due'             // Paiement en retard, abonnement suspendu en attente de régularisation
-  | 'trialing'             // Période d’essai en cours, accès temporaire
-  | 'unpaid'               // Paiement impayé, abonnement en échec de paiement prolongé
-  | 'incomplete'           // Abonnement créé mais paiement non confirmé (ex : échec de la première tentative)
-  | 'incomplete_expired'   // Période de paiement incomplète expirée sans succès, abonnement annulé
-  | 'paused';              // Abonnement temporairement suspendu (en pause)
+export type UserPreferredLocale = "fr" | "en"
 
 /**
  * Représente un utilisateur de l'application.
@@ -22,8 +14,9 @@ export interface IUser extends Document {
   image: string;
   stripeCustomerId?: string;
   stripeSellerAccountId?: string;
-  subscriptionStatus?: SubscriptionStatus;
-  subscriptionCurrentPeriodEnd?: Date;
+  hasUsedTrial: boolean;
+  hasTrialEndingNotified: boolean;
+  preferredLocale: UserPreferredLocale
 }
 
 const UserSchema: Schema<IUser> = new Schema(
@@ -32,29 +25,23 @@ const UserSchema: Schema<IUser> = new Schema(
     email: { type: String, required: true, unique: true },
     role: {
       type: String,
-      enum: ['admin', 'free', 'premium'],
-      default: 'free',
+      enum: ['admin', 'customer'],
+      default: 'customer',
     },
     image: { type: String, required: false },
     stripeCustomerId: { type: String },
     stripeSellerAccountId: { type: String },
-    subscriptionStatus: {
+    hasUsedTrial: { type: Boolean, required: true, default: false },
+    hasTrialEndingNotified: { type: Boolean, required: true, default: false },
+    preferredLocale: {
       type: String,
-      enum: [
-        'active',
-        'canceled',
-        'past_due',
-        'trialing',
-        'unpaid',
-        'incomplete',
-        'incomplete_expired',
-        'paused',
-      ],
-    },
-    subscriptionCurrentPeriodEnd: { type: Date },
+      enum: ["fr", "en"],
+      default: "fr"
+    }
   },
   { timestamps: true }
 );
 
 export const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', UserSchema);
+
 export default User;

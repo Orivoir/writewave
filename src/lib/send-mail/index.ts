@@ -3,10 +3,13 @@ import nodemailer from "nodemailer";
 export type TemplateName =
   | "subscription-updated"
   | "subscription-deleted"
+  | "subscription-created"
   | "checkout-completed"
   | "invoice-payment-success"
   | "invoice-payment-failed"
   | "subscription-trial-will-end"
+  | "subscription-trial-ended"
+  | "payment-incomplete"
 
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_SERVER_HOST,

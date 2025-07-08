@@ -4,7 +4,7 @@ interface PageProps {
 
 export default async function EbookPage({params}: PageProps) {
 
-  const {slug} = params
+  const {slug} = await params
 
   return (
     <>

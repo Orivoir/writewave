@@ -29,6 +29,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
+    const trialPeriodDays = user.hasUsedTrial ? 0: 7 // définie une période d'essaie gratuite (7 jours si jamais utilisé)
+
     // Étape 1 : créer un Stripe Customer si pas encore fait
     if (!user.stripeCustomerId) {
       const customer = await stripe.customers.create({
@@ -40,7 +42,7 @@ export async function POST(req: NextRequest) {
       // associe le stripe customer au user model (via le stripe customer id)
       user.stripeCustomerId = customer.id;
       await user.save();
-    } 
+    }
 
     const sessionStripe = await stripe.checkout.sessions.create({
       mode: "subscription",
@@ -51,6 +53,9 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
+      subscription_data: {
+        trial_period_days: trialPeriodDays, // définie une période d'essai gratuite de 7 jours
+      },
       success_url: `${process.env.NEXTAUTH_URL}/dashboard/payment-success`,
       cancel_url: `${process.env.NEXTAUTH_URL}/dashboard/payment-cancel`,
     });

@@ -5,7 +5,6 @@ import EmailProvider from "next-auth/providers/email";
 import { MongoDBAdapter } from "@auth/mongodb-adapter";
 import clientPromise from "@/lib/mongo-client";
 import { ObjectId } from "mongodb";
-import { UserRole } from "@/models/User";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -41,20 +40,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/login", // custom login page
   },
-  events: {
-    async createUser({ user }) {
-      const db = (await clientPromise).db();
-      await db.collection("users").updateOne(
-        { _id: new ObjectId(user.id) },
-        {
-          $set: {
-            role: "free",
-            // isCompleted: true, // ou false selon conditions
-          }
-        }
-      );
-    }
-  },
+  events: {},
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
