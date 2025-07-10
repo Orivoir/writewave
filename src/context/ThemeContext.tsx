@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useMemo, useState, ReactNode } from 'react';
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { ThemeProvider, CssBaseline } from '@mui/material';
+import createTheme from '@/config/theme';
 
 type ThemeContextType = {
   mode: 'light' | 'dark';
@@ -20,7 +21,7 @@ export function ThemeContextProvider({ children }: Props) {
     setMode((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
-  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
+  const theme = useMemo(() => createTheme(mode), [mode]);
 
   return (
     <ThemeContext.Provider value={{ mode, toggleTheme }}>

@@ -1,24 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Menu,
-  MenuItem,
-  Typography,
-  IconButton,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-} from "@mui/material";
-import LogoutIcon from '@mui/icons-material/Logout';
-import SettingsIcon from '@mui/icons-material/Settings';
-import PaymentsIcon from '@mui/icons-material/Payments';
-import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
-import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
-import { UserRole } from "@/models/User";
+import { Menu, Divider  } from "@mui/material";
 import type { IamResponse } from "@/hooks/useIam";
 import UserIdentityText from "@/atomes/UserIdentityText";
 import UserMenuItem from "../UserMenuItem";

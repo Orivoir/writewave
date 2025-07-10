@@ -1,3 +1,4 @@
+import type { UserPreferredLocale } from "@/models/User";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
@@ -8,7 +9,11 @@ export interface IamResponse {
     email: string;
     image: string;
     emailVerified: null | boolean;
-    role: "free" | "premium" | "admin";
+    role: "admin" | "customer";
+    stripeCustomerId?: string;
+    stripeSellerAccountId?: string;
+    hasUsedTrial: boolean;
+    preferredLocale: UserPreferredLocale
   };
   accounts?: Array<Record<string, any>>;
 }
