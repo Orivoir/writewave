@@ -12,5 +12,45 @@
   },
   "Plan": {
     "SubscriptionButton": "Free trial"
+  },
+  "emails": {
+    "checkoutCompleted": {
+      "greeting": "Welcome to Writewave Pro",
+      "line1": "Thanks for subscribing to our premium plan.",
+      "line2": "You now have access to all features.",
+      "line3": "To get started, log in and explore what you can do."
+    },
+    "invoicePaymentFailed": {
+      "subject": "Your invoice payment failed",
+      "greeting": "Hi {name}",
+      "line1": "The payment of {amount} {currency} failed.",
+      "line2WithDueDate": "Please pay before {dueDate} to avoid suspension of your account.",
+      "line2WithoutDueDate": "Please pay as soon as possible to avoid suspension of your account.",
+      "cta": "You can update your payment method or manually pay the invoice from your dashboard.",
+      "closing": "Thanks for your support.",
+      "signature": "The Writewave Team"
+    },
+    "invoicePaymentSuccess": {
+      "subject": "Payment received – thank you!",
+      "greeting": "Hi {name}",
+      "line1": "We received your payment of {amount} {currency} on {date}.",
+      "line2": "You can view your invoice here:",
+      "cta": "View invoice",
+      "closing": "Thanks for your support.",
+      "signature": "The Writewave Team"
+    },
+    "subscriptionCreated": {
+      "subject": "Welcome to Writewave Pro",
+      "greeting": "Hi {name}",
+      "withTrial": "You’re enjoying a free trial until {trialEndDate}.",
+      "withoutTrial": "Your premium subscription is now active.",
+      "cta": "Log in to start writing.",
+      "closing": "Happy writing!",
+      "signature": "The Writewave Team"
+    },
+    "common": {
+      "closing": "Happy writing!",
+      "signature": "The Writewave Team"
+    }
   }
 }

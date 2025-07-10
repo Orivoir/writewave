@@ -1,29 +1,36 @@
-export function html(params: { userName: string }) {
+import { TranslateFn } from "@/lib/send-mail";
+
+export function html(params: { userName: string; t: TranslateFn }) {
+  const { userName, t } = params;
+
   return `
     <div style="font-family: Arial, sans-serif; color: #333;">
-      <h1>Bienvenue chez Writewave Pro, ${params.userName} !</h1>
-      <p>Merci d'avoir souscrit à notre plan premium.</p>
-      <p>Tu as maintenant accès à toutes les fonctionnalités.</p>
-      <p>Pour commencer, connecte-toi et découvre tout ce que tu peux faire.</p>
+      <h1>${t("emails.checkoutCompleted.greeting")}, ${userName} !</h1>
+      <p>${t("emails.checkoutCompleted.line1")}</p>
+      <p>${t("emails.checkoutCompleted.line2")}</p>
+      <p>${t("emails.checkoutCompleted.line3")}</p>
       <br/>
-      <p>Bonne écriture !</p>
-      <p>L’équipe Writewave</p>
+      <p>${t("emails.common.closing")}</p>
+      <p>${t("emails.common.signature")}</p>
     </div>
   `;
 }
 
-export function text(params: { userName: string }) {
+
+export function text(params: { userName: string; t: TranslateFn }) {
+  const { userName, t } = params;
+
   return `
-Bienvenue chez Writewave Pro, ${params.userName} !
+${t("emails.checkoutCompleted.greeting")}, ${userName} !
 
-Merci d'avoir souscrit à notre plan premium.
+${t("emails.checkoutCompleted.line1")}
 
-Tu as maintenant accès à toutes les fonctionnalités.
+${t("emails.checkoutCompleted.line2")}
 
-Pour commencer, connecte-toi et découvre tout ce que tu peux faire.
+${t("emails.checkoutCompleted.line3")}
 
-Bonne écriture !
+${t("emails.common.closing")}
 
-L’équipe Writewave
+${t("emails.common.signature")}
   `.trim();
 }

@@ -12,5 +12,54 @@
   },
   "Plan": {
     "SubscriptionButton": "J'essaie gratuitement"
+  },
+  "emails": {
+    "checkoutCompleted": {
+      "greeting": "Bienvenue chez Writewave Pro",
+      "line1": "Merci d'avoir souscrit à notre plan premium.",
+      "line2": "Tu as maintenant accès à toutes les fonctionnalités.",
+      "line3": "Pour commencer, connecte-toi et découvre tout ce que tu peux faire."
+    },
+    "invoicePaymentFailed": {
+      "subject": "Échec du paiement de ta facture",
+      "greeting": "Bonjour {name}",
+      "line1": "Le paiement de {amount} {currency} a échoué.",
+      "line2WithDueDate": "Merci de régler avant le {dueDate} pour éviter la suspension de ton compte.",
+      "line2WithoutDueDate": "Merci de régler dès que possible pour éviter la suspension de ton compte.",
+      "cta": "Tu peux mettre à jour ton moyen de paiement ou régler manuellement ta facture depuis ton espace.",
+      "closing": "Merci pour ta confiance.",
+      "signature": "L’équipe Writewave"
+    },
+    "invoicePaymentSuccess": {
+      "subject": "Paiement reçu – merci !",
+      "greeting": "Bonjour {name}",
+      "line1": "Nous avons bien reçu ton paiement de {amount} {currency} le {date}.",
+      "line2": "Tu peux consulter ta facture ici :",
+      "cta": "Voir la facture",
+      "closing": "Merci pour ta confiance.",
+      "signature": "L’équipe Writewave"
+    },
+    "paymentIncomplete": {
+      "subject": "Action requise : finalise ton paiement",
+      "greeting": "Bonjour {name}",
+      "line1": "Ton abonnement ne sera pas activé tant que le paiement n’est pas complété.",
+      "line2": "Merci de <a href='{url}'>finaliser ton paiement</a> pour éviter toute interruption.",
+      "line2Text": "Merci de finaliser ton paiement ici : {url}",
+      "closing": "Bonne écriture !",
+      "signature": "L’équipe Writewave"
+    },
+    "subscriptionCreated": {
+      "subject": "Bienvenue chez Writewave Pro",
+      "greeting": "Bonjour {name}",
+      "withTrial": "Tu profites d'une période d’essai gratuite jusqu’au {trialEndDate}.",
+      "withoutTrial": "Ton abonnement premium est maintenant actif.",
+      "cta": "Connecte-toi pour commencer à écrire.",
+      "closing": "Bonne écriture !",
+      "signature": "L’équipe Writewave"
+    },
+    "common": {
+      "closing": "Bonne écriture !",
+      "signature": "L’équipe Writewave"
+    }
   }
 }

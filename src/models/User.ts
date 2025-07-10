@@ -15,7 +15,6 @@ export interface IUser extends Document {
   stripeCustomerId?: string;
   stripeSellerAccountId?: string;
   hasUsedTrial: boolean;
-  hasTrialEndingNotified: boolean;
   preferredLocale: UserPreferredLocale
 }
 
@@ -32,7 +31,6 @@ const UserSchema: Schema<IUser> = new Schema(
     stripeCustomerId: { type: String },
     stripeSellerAccountId: { type: String },
     hasUsedTrial: { type: Boolean, required: true, default: false },
-    hasTrialEndingNotified: { type: Boolean, required: true, default: false },
     preferredLocale: {
       type: String,
       enum: ["fr", "en"],

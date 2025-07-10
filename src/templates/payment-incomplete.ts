@@ -1,21 +1,39 @@
-export function html(params: { userName: string, paymentUrl: string }) {
+import { TranslateFn } from "@/lib/send-mail";
+
+export function html(params: {
+  userName: string;
+  paymentUrl: string;
+  t: TranslateFn;
+}) {
+  const { userName, paymentUrl, t } = params;
+
   return `
     <div style="font-family: Arial, sans-serif; color: #333;">
-      <h1>Conserver votre abonement, ${params.userName} !</h1>
-      <p>Mettez à jour votre <a href="${params.paymentUrl}">abonnement</a><p>
+      <h1>${t("emails.paymentIncomplete.greeting", { name: userName })}</h1>
+      <p>${t("emails.paymentIncomplete.line1")}</p>
+      <p>${t("emails.paymentIncomplete.line2", { url: paymentUrl })}</p>
       <br/>
-      <p>Bonne écriture !</p>
-      <p>L’équipe Writewave</p>
+      <p>${t("emails.paymentIncomplete.closing")}</p>
+      <p>${t("emails.paymentIncomplete.signature")}</p>
     </div>
   `;
 }
 
-export function text(params: { userName: string, paymentUrl: string }) {
+export function text(params: {
+  userName: string;
+  paymentUrl: string;
+  t: TranslateFn;
+}) {
+  const { userName, paymentUrl, t } = params;
+
   return `
-Mettez à jour votre abonnement ${params.userName}.
+${t("emails.paymentIncomplete.greeting", { name: userName })}
 
-Payment URL: ${params.paymentUrl}
+${t("emails.paymentIncomplete.line1")}
 
-L’équipe Writewave
+${t("emails.paymentIncomplete.line2Text", { url: paymentUrl })}
+
+${t("emails.paymentIncomplete.closing")}
+${t("emails.paymentIncomplete.signature")}
   `.trim();
 }
