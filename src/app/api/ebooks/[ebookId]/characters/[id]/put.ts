@@ -2,25 +2,37 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect from "@/lib/mongoose";
-import Character from "@/models/Character";
+import { updateCharacter } from "@/services/characters";
 
-// PUT /api/ebooks/[ebookId]/characters/[id]
-
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: { id: string; ebookId: string } }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   await dbConnect();
-  const body = await req.json();
 
-  const character = await Character.findById(params.id);
-  if (!character) return NextResponse.json({ error: "Character not found" }, { status: 404 });
+  try {
+    const body = await req.json();
 
-  if (body.name) character.name = body.name;
-  if (body.gender) character.gender = body.gender;
-  if (body.description !== undefined) character.description = body.description;
-  if (Array.isArray(body.relations)) character.relations = body.relations;
+    const updated = await updateCharacter({
+      ebookId: params.ebookId,
+      characterId: params.id,
+      userId: session.user.id,
+      name: body.name,
+      gender: body.gender,
+      description: body.description,
+      relations: body.relations,
+    });
 
-  await character.save();
-  return NextResponse.json(character);
+    return NextResponse.json(updated, { status: 200 });
+
+  } catch (err: any) {
+    const map: Record<string, [string, number]> = {
+      EbookNotFound: ["Ebook not found", 404],
+      CharacterNotFound: ["Character not found", 404],
+      Forbidden: ["Unauthorized", 403],
+    };
+
+    const [message, code] = map[err.message] ?? ["Internal Server Error", 500];
+    return NextResponse.json({ error: message }, { status: code });
+  }
 }

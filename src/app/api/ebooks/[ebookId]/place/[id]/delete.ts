@@ -1,29 +1,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import dbConnect from "@/lib/mongoose";
-import Place from "@/models/Place";
+import { deletePlace } from "@/services/places";
 
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { ebookId: string; placeId: string } }
-) {
+export async function DELETE(req: NextRequest, { params }: { params: { ebookId: string; placeId: string } }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  await dbConnect();
+  try {
 
-  const { ebookId, placeId } = params;
+    const {ebookId, placeId} = await params
 
-  const place = await Place.findById(placeId);
-  if (!place) return NextResponse.json({ error: "Place not found" }, { status: 404 });
+    const placeDeleted = await deletePlace({
+      ebookId,
+      placeId,
+      userId: session.user.id
+    });
+    
+    return NextResponse.json({placeDeleted});
 
-  if (place.ebook.toString() !== ebookId)
-    return NextResponse.json({ error: "Place does not belong to ebook" }, { status: 400 });
-
-  // Optionnel: vérifier que session.user.id est bien auteur ebook (sécurité)
-
-  await place.deleteOne();
-
-  return NextResponse.json({ message: "Place deleted" });
+  } catch (error: any) {
+    if (error.message === "Ebook not found" || error.message === "Place not found") {
+      return NextResponse.json({ error: error.message }, { status: 404 });
+    }
+    if (error.message === "Forbidden") {
+      return NextResponse.json({ error: error.message }, { status: 403 });
+    }
+    if (error.message === "Place does not belong to ebook") {
+      return NextResponse.json({ error: error.message }, { status: 400 });
+    }
+    console.error(error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+  }
 }

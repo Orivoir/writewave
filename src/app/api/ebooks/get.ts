@@ -4,6 +4,7 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import dbConnect from "@/lib/mongoose";
 import Ebook from "@/models/Ebook";
 import { paginate } from "@/lib/paginate";
+import { getUserEbooks } from "@/services/ebooks/get-user-ebooks";
 
 export async function GET(request: Request) {
   try {
@@ -18,9 +19,9 @@ export async function GET(request: Request) {
     const page = parseInt(url.searchParams.get("page") || "1");
     const limit = parseInt(url.searchParams.get("limit") || "10");
 
-    const result = await paginate(Ebook, { author: session.user.id }, page, limit);
+    const ebooks = await getUserEbooks(session.user.id, {page, limit})
 
-    return NextResponse.json(result);
+    return NextResponse.json(ebooks);
   } catch (error) {
     console.error("Error fetching ebooks:", error);
     return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

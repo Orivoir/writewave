@@ -19,7 +19,6 @@ export async function GET(req: NextRequest, { params }: { params: { ebookId: str
 
     const page = parseInt(req.nextUrl.searchParams.get("page") || "1", 10);
     const pageSize = parseInt(req.nextUrl.searchParams.get("pageSize") || "10", 10);
-  
     
     const result = await paginate(Chapter, { ebook: params.ebookId }, page, pageSize, {content: 0, updateAt: 0, createdAt: 0});
 
